@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet"  href="libs/jquery.mobile-1.0a3/jquery.mobile-1.0a3.min.css" />
+	<script type="text/javascript" src="libs/jquery/jquery-1.5.js"></script>
+	<script type="text/javascript" src="libs/jquery.urldecoder/jquery.urldecoder.js"></script>
+	<script type="text/javascript" src="libs/underscore/underscore-min.js"></script>
+	<script type="text/javascript" src="libs/dali/dali.js"></script>
+	<script type="text/javascript" src="scripts/main.js"></script>
+	<script type="text/javascript" src="libs/jquery.mobile-1.0a3/jquery.mobile-1.0a3.js"></script>
+	<!--
+	This script is a modified version of the JQM page widget
+	that has been fixed to support the "refresh" method on pages
+	-->
+	<script type="text/javascript" src="scripts/mobile.page.js"></script>
+	<!--
+	This script contains sample data used in this demonstration
+	-->
+	<script type="text/javascript" src="scripts/sample-data.js"></script>
+	<!--
+	Create an instance of the sample app and start it
+	-->
+	<script>
+		var environ = {
+			vechiles: vehicles
+		};
+		var app = new SampleApp();
+		app.start(environ);
+	</script>
+	<!--
+
+	The following script tags are the various page template used
+	to render the pages.
+
+	To user these templates, simply assign them to the JQM page
+	with the "data-template" attribute.
+
+	-->
+	<script id="view-home" type="text/x-dali-template">
+		<div data-role="header" data-theme="a" data-backbtn="false">
+			<h1>Dynamic jQuery Mobile</h1>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true" data-theme="d">
+				<li><a href="#vehicleList">List of vehicles</a></li>
+			</ul>
+		</div>
+	</script>
+	<script id="view-vehicleList" type="text/x-dali-template">
+		<div data-role="header" data-theme="a">
+			<h1>Vehicles</h1>
+			<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true" data-theme="c">
+				{{each item.vehicles }}
+					<li><a href="#vehicleDetail?id={{out item.id /}}">{{out item.label /}}</a></li>
+				{{endeach}}
+			</ul>
+		</div>
+	</script>
+	<script id="view-vehicleDetail" type="text/x-dali-template">
+		<div data-role="header" data-theme="b">
+			<h1>Vehicle Details</h1>
+			<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
+		</div>
+ 		<div data-role="content">
+			<ul data-role="listview" data-theme="d">
+				<li>Type: {{out item.vehicle.label /}}</li>
+				<li>Description: {{out item.vehicle.description /}}</li>
+			</ul>
+		</div>
+	</script>
+</head>
+	<body>
+		<!--
+
+		The following tags are each of the site pages. Their content will be create by
+		rendering the templates described previously.
+
+		-->
+		<div data-controller="home" data-view="home" data-role="page" data-theme="a" id="home"></div>
+		<div data-controller="vehicleList" data-view="vehicleList" data-role="page" data-theme="a" id="vehicleList"></div>
+		<div data-controller="vehicleDetail" data-view="vehicleDetail" data-role="page" data-theme="a" id="vehicleDetail"></div>
+	</body>
+</html>
