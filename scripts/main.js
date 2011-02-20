@@ -48,14 +48,14 @@
 		 */
 		function controllers() {
 			return {
-				home: new Controller("home", function(model, view) {
-					return view.render(model);
+				home: new Controller("home", function(model, view, callback) {
+					callback(view.render(model));
 				}),
-				vehicleList: new Controller("vehicleList", function(model, view) {
+				vehicleList: new Controller("vehicleList", function(model, view, callback) {
 					model.vehicles = vehicles;
-					return view.render(model);
+					callback(view.render(model));
 				}),
-				vehicleDetail: new Controller("vehicleDetail", function(model, view) {
+				vehicleDetail: new Controller("vehicleDetail", function(model, view, callback) {
 					// Obtain the vehicle by filtering with the id
 					var vehicle = _(vehicles).detect(function(item) {
 						// In this case model.params.id is comming from the
@@ -63,7 +63,19 @@
 						return item.id === model.params.id;
 					});
 					model.vehicle = vehicle;
-					return view.render(model);
+					callback(view.render(model));
+				}),
+				githubRepos: new Controller("githubRepos", function (model, view, callback) {
+					var data = {},
+						req = $.ajax({
+						async: false,
+						url: "http://github.com/api/v2/json/repos/show/masyl",
+						dataType: "jsonp",
+						success: function(data) {
+							model.repositories = data.repositories;
+							callback(view.render(model));
+						}
+					})
 				})
 			};
 		}

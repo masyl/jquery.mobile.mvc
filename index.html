@@ -44,6 +44,7 @@
 		<div data-role="content">
 			<ul data-role="listview" data-inset="true" data-theme="d">
 				<li><a href="#vehicleList">List of vehicles</a></li>
+				<li><a href="#githubRepos">GitHub Repos of Masyl</a></li>
 			</ul>
 		</div>
 	</script>
@@ -72,6 +73,31 @@
 			</ul>
 		</div>
 	</script>
+	<script id="view-githubRepos" type="text/x-dali-template">
+		<div data-role="header" data-theme="a">
+			<h1>GitHub</h1>
+			<a href="#home" data-icon="home" data-iconpos="notext" data-direction="reverse" class="ui-btn-right jqm-home">Home</a>
+		</div>
+		<div data-role="content">
+			<ul data-role="listview" data-inset="true" data-theme="c">
+				{{each item.repositories }}
+					<li>
+						<h3><a href="{{out item.url /}}">{{out item.name /}}</a></h3>
+						<p>{{out item.description /}}</p>
+						<span class="ui-li-count">
+							{{if item.watchers > 1 }}
+								{{out item.watchers /}} watchers
+							{{if-else items.watchers == 0}}
+								{{out item.watchers /}} watcher
+							{{if-not}}
+								No watchers
+							{{endif}}
+						</span>
+					</li>
+				{{endeach}}
+			</ul>
+		</div>
+	</script>
 </head>
 	<body>
 		<!--
@@ -83,5 +109,6 @@
 		<div data-controller="home" data-view="home" data-role="page" data-theme="a" id="home"></div>
 		<div data-controller="vehicleList" data-view="vehicleList" data-role="page" data-theme="a" id="vehicleList"></div>
 		<div data-controller="vehicleDetail" data-view="vehicleDetail" data-role="page" data-theme="a" id="vehicleDetail"></div>
+		<div data-controller="githubRepos" data-view="githubRepos" data-role="page" data-theme="a" id="githubRepos"></div>
 	</body>
 </html>
